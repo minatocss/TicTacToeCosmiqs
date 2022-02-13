@@ -1,0 +1,72 @@
+# goal: make the code smart enough to chose a winner !
+# KISS: keep it simple stupid
+
+playerid1 = input('Player 1 id: ')
+playerid2 = input('Player 2 id: ')
+
+grid_array = [['1', '|', '2', '|', '3'],
+              ['-', '+', '-', '+', '-'],
+              ['4', '|', '5', '|', '6'],
+              ['-', '+', '-', '+', '-'],
+              ['7', '|', '8', '|', '9']]
+
+i = 0
+for i in range(5):
+    print(grid_array[i])
+
+print('------------------ game starts ---------------')
+
+# this function defines if there is the winner and prints who is the winner and return a bool
+def verifyWinner(isItX):
+    i = 0
+    print('verifying')
+    #veirfy horziontal 
+    for i in range(3):
+        if grid_array[i * 2][0] == grid_array[i * 2][2] and grid_array[i * 2][4] == grid_array[i * 2][0]:
+            playerid = playerid2 if isItX else playerid1
+            print('the winner is player ', playerid)
+            return True
+    i = 0
+    #verify vertical
+    for i in range(3):
+        if grid_array[0][i * 2] == grid_array[2][i * 2] and grid_array[4][i * 2] == grid_array[0][i * 2]:
+            playerid = playerid2 if isItX else playerid1
+            print('the winner is player ', playerid)
+            return True
+    #verify diagonal
+    if grid_array[2][2] == grid_array[0][0] and grid_array[2][2] == grid_array[4][4]:
+        playerid = playerid2 if isItX else playerid1
+        print('the winner is player ', playerid)
+        return True
+    if grid_array[2][2] == grid_array[0][4] and grid_array[2][2] == grid_array[4][0]:
+        playerid = playerid2 if isItX else playerid1
+        print('the winner is player ', playerid)
+        return True
+    
+    return False
+
+
+def playGame():
+    i = 0
+    isItX = True
+    for i in range(9):
+        a = input('What square should I change ? ')
+        j = 0
+        for j in range(5):
+            z = 0
+            for z in range(5):
+                if grid_array[j][z] == a:
+                    if isItX:
+                        grid_array[j][z] = 'X'
+                        isItX = False
+                    else:
+                        grid_array[j][z] = 'O'
+                        isItX = True
+            print(grid_array[j])
+        if verifyWinner(isItX):
+            print('game ending')
+            return
+    print("It's a draw")
+
+
+playGame()
